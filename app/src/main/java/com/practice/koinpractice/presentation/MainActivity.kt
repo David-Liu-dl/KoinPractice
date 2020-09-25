@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         savedInstanceState ?: supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragmentContainerView, LandingFragment())
+            .replace(R.id.fragmentContainerView, LandingFragment.instance("KoinPractice"))
             .commit()
     }
 

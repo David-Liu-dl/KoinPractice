@@ -9,20 +9,26 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.practice.koinpractice.R
 import com.practice.koinpractice.ViewModuleQualifier
-import com.practice.koinpractice.presentation.LandingViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
 class LandingFragment : Fragment(R.layout.fragment_landing) {
     companion object {
-        const val BUNDLE_INFO = "BUNDLE_INFO"
+        const val PASSED_IN_INFO = "passed_in_info"
+        const val RETAINED_IN_INFO = "retained_in_info"
+
+        fun instance(tracking: String) = LandingFragment().apply {
+            arguments = Bundle().apply {
+                putString(PASSED_IN_INFO, tracking)
+            }
+        }
     }
 
     private val viewModel: LandingViewModel by stateViewModel(
         named(ViewModuleQualifier.LandingViewModel),
         { arguments ?: Bundle() }) {
-        parametersOf("LandingView")
+        parametersOf(arguments?.get(PASSED_IN_INFO))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
